@@ -1,7 +1,7 @@
 import * as React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+// import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,6 +9,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { NavLink } from "react-router-dom";
 
 export const mainListItems = (
    <React.Fragment>
@@ -16,31 +17,36 @@ export const mainListItems = (
          <ListItemIcon>
             <DashboardIcon />
          </ListItemIcon>
-         <ListItemText primary="Dashboard" />
+         {/* <ListItemText primary="Dashboard" /> */}
+         <NavLink to="/">Dashboard</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
             <ShoppingCartIcon />
          </ListItemIcon>
-         <ListItemText primary="Orders" />
+         {/* <ListItemText primary="Orders" /> */}
+         <NavLink to="/SUB1">SUB1</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
             <PeopleIcon />
          </ListItemIcon>
-         <ListItemText primary="Customers" />
+         {/* <ListItemText primary="Customers" /> */}
+         <NavLink to="/SUB2">SUB2</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
             <BarChartIcon />
          </ListItemIcon>
-         <ListItemText primary="Reports" />
+         {/* <ListItemText primary="Reports" /> */}
+         <NavLink to="/SUB3">SUB3</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
             <LayersIcon />
          </ListItemIcon>
-         <ListItemText primary="Integrations" />
+         {/* <ListItemText primary="Integrations" /> */}
+         <NavLink to="/SUB4">SUB4</NavLink>
       </ListItemButton>
    </React.Fragment>
 );
@@ -51,25 +57,21 @@ export const secondaryListItems = (
          component="div"
          inset
       >
-         Saved reports
+         두번째 탭
       </ListSubheader>
       <ListItemButton>
          <ListItemIcon>
             <AssignmentIcon />
          </ListItemIcon>
-         <ListItemText primary="Current month" />
+         {/* <ListItemText primary="Current month" /> */}
+         <NavLink to="/SUB5">SUB5</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
             <AssignmentIcon />
          </ListItemIcon>
-         <ListItemText primary="Last quarter" />
-      </ListItemButton>
-      <ListItemButton>
-         <ListItemIcon>
-            <AssignmentIcon />
-         </ListItemIcon>
-         <ListItemText primary="Year-end sale" />
+         {/* <ListItemText primary="Last quarter" /> */}
+         <NavLink to="/1231231231234515213213">오류 페이지</NavLink>
       </ListItemButton>
    </React.Fragment>
 );

@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { loginStore } from "store/store";
 import { useRecoilState } from "recoil";
+import axios, { AxiosResponse } from "axios";
 
 function Copyright(props: any) {
    return (
@@ -128,6 +129,21 @@ export default function SignIn() {
                      sx={{ mt: 3, mb: 2, pt: 1.5, pb: 1.5 }}
                   >
                      Sign In
+                  </Button>
+                  <Button
+                     type="button"
+                     fullWidth
+                     variant="contained"
+                     sx={{ mt: 3, mb: 2, pt: 1.5, pb: 1.5 }}
+                     onClick={async () => {
+                        const response: AxiosResponse<string, any> = await axios.get(
+                           "https://jsonplaceholder.typicode.com/users",
+                        );
+                        const result = response;
+                        console.log(result);
+                     }}
+                  >
+                     Test
                   </Button>
                   <Grid container>
                      <Grid
