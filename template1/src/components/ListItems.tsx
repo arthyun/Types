@@ -1,15 +1,15 @@
-import * as React from "react";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import * as React from 'react';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 // import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PeopleIcon from "@mui/icons-material/People";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import LayersIcon from "@mui/icons-material/Layers";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { NavLink } from "react-router-dom";
+import ListSubheader from '@mui/material/ListSubheader';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { NavLink } from 'react-router-dom';
 
 export const mainListItems = (
    <React.Fragment>
@@ -25,14 +25,14 @@ export const mainListItems = (
             <ShoppingCartIcon />
          </ListItemIcon>
          {/* <ListItemText primary="Orders" /> */}
-         <NavLink to="/SUB1">SUB1</NavLink>
+         <NavLink to="/Chart">Chart</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
             <PeopleIcon />
          </ListItemIcon>
          {/* <ListItemText primary="Customers" /> */}
-         <NavLink to="/SUB2">SUB2</NavLink>
+         <NavLink to="/Editor">Editor</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
@@ -53,10 +53,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
    <React.Fragment>
-      <ListSubheader
-         component="div"
-         inset
-      >
+      <ListSubheader component="div" inset>
          두번째 탭
       </ListSubheader>
       <ListItemButton>

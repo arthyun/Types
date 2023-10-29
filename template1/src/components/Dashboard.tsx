@@ -1,30 +1,25 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+import * as React from 'react';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 // components
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
+import Chart from './Chart';
+import Deposits from './Deposits';
+import Orders from './Orders';
 
 export default function Dashboard() {
    return (
-      <Grid
-         container
-         spacing={3}
-      >
+      <Grid container spacing={3}>
+         <Grid item xs={12}>
+            <h2>Dashboard</h2>
+         </Grid>
          {/* Chart */}
-         <Grid
-            item
-            xs={12}
-            md={8}
-            lg={9}
-         >
+         <Grid item xs={12} md={8} lg={9}>
             <Paper
                sx={{
                   p: 2,
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                   height: 240,
                }}
             >
@@ -32,17 +27,12 @@ export default function Dashboard() {
             </Paper>
          </Grid>
          {/* Recent Deposits */}
-         <Grid
-            item
-            xs={12}
-            md={4}
-            lg={3}
-         >
+         <Grid item xs={12} md={4} lg={3}>
             <Paper
                sx={{
                   p: 2,
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                   height: 240,
                }}
             >
@@ -50,11 +40,8 @@ export default function Dashboard() {
             </Paper>
          </Grid>
          {/* Recent Orders */}
-         <Grid
-            item
-            xs={12}
-         >
-            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+         <Grid item xs={12}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                <Orders />
             </Paper>
          </Grid>
