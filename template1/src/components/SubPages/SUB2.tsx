@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
 // import { Editor } from "ckeditor5-custom-build/build/ckeditor";
 // import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
 
