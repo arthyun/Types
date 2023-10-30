@@ -1,15 +1,15 @@
-import * as React from 'react';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import * as React from "react";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 // import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import { NavLink } from 'react-router-dom';
+import ListSubheader from "@mui/material/ListSubheader";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PeopleIcon from "@mui/icons-material/People";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import LayersIcon from "@mui/icons-material/Layers";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import { NavLink } from "react-router-dom";
 
 export const mainListItems = (
    <React.Fragment>
@@ -39,7 +39,7 @@ export const mainListItems = (
             <BarChartIcon />
          </ListItemIcon>
          {/* <ListItemText primary="Reports" /> */}
-         <NavLink to="/SUB3">SUB3</NavLink>
+         <NavLink to="/DataGrid">DataGrid</NavLink>
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
@@ -53,7 +53,10 @@ export const mainListItems = (
 
 export const secondaryListItems = (
    <React.Fragment>
-      <ListSubheader component="div" inset>
+      <ListSubheader
+         component="div"
+         inset
+      >
          두번째 탭
       </ListSubheader>
       <ListItemButton>
