@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styled from "styled-components";
+import Sidebar from "./Sidebar";
 
 // Custom Components
 const HomeContainer = styled.div`
@@ -50,20 +51,23 @@ const Home = () => {
    };
 
    return (
-      <HomeContainer>
-         <h3>경기도 맛집 찾기</h3>
-         <form onSubmit={onSubmit}>
-            <LabelSearch htmlFor="search">검색창</LabelSearch>
-            <InputSearch
-               id="search"
-               type="text"
-               value={text}
-               onChange={onChangeText}
-               placeholder="검색어를 입력하세요"
-            />
-            <button type="submit">검색</button>
-         </form>
-      </HomeContainer>
+      <>
+         <Sidebar />
+         <HomeContainer>
+            <h3>경기도 맛집 찾기</h3>
+            <form onSubmit={onSubmit}>
+               <LabelSearch htmlFor="search">검색창</LabelSearch>
+               <InputSearch
+                  id="search"
+                  type="text"
+                  value={text}
+                  onChange={onChangeText}
+                  placeholder="검색어를 입력하세요"
+               />
+               <button type="submit">검색</button>
+            </form>
+         </HomeContainer>
+      </>
    );
 };
 
