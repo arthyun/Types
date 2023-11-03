@@ -8,6 +8,7 @@ const NavContainer = styled.nav<{ right: number }>`
    /* right: -280px; */
    right: ${(props) => props.right + "px"};
    top: 0;
+   z-index: 100;
    width: 350px;
    height: 100%;
    text-align: start;

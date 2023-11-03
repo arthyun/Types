@@ -5,7 +5,7 @@ import "./styles/App.css";
 import AppRouter from "./Router";
 
 function App() {
-   const [isPage, setIsPage] = useState<boolean>(false);
+   const [isPage, setIsPage] = useState<boolean>(true);
 
    return (
       <>

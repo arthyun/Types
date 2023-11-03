@@ -1,5 +1,5 @@
 #root {
-   width: 100%;
+   width: calc(100vw - 150px);
    /* margin: 0 auto; */
    padding: 2rem;
    text-align: center;
