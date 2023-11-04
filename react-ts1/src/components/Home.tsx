@@ -144,6 +144,8 @@ const Home = () => {
       }
    };
 
+   console.log("pull 검수1");
+
    return (
       <>
          <Sidebar />
