@@ -19,8 +19,9 @@ interface iProps {
 
 const ListContainer = styled.div`
    width: 100%;
-   height: 515px;
+   max-height: 515px;
    overflow-y: scroll;
+   margin-top: 15px;
 `;
 const ListUl = styled.ul`
    width: 100%;

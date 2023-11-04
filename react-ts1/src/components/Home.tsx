@@ -2,9 +2,9 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import ListItem from "./ListItem";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-// Custom Components
+// Styled Components
 const HomeContainer = styled.div`
    width: 100%;
    padding: 1rem;
@@ -48,6 +48,7 @@ const SearchBtn = styled.button`
    margin-left: 15px;
 `;
 
+// Types
 interface HeadData {
    list_total_count?: string;
    RESULT?: {
@@ -56,26 +57,6 @@ interface HeadData {
    };
    api_version?: string;
 }
-
-interface ResponseData {
-   PlaceThatDoATasteyFoodSt: {
-      head: HeadData[];
-      row: {
-         REFINE_LOTNO_ADDR?: string;
-         REFINE_ROADNM_ADDR?: string;
-         REFINE_WGS84_LAT?: string;
-         REFINE_WGS84_LOGT?: string;
-         REFINE_ZIP_CD?: string;
-         REPRSNT_FOOD_NM?: string;
-         RESTRT_NM?: string;
-         RM_MATR?: null;
-         SIGUN_CD?: string;
-         SIGUN_NM?: string;
-         TASTFDPLC_TELNO?: string;
-      }[];
-   };
-}
-
 interface ParamTypes {
    KEY: string;
    Type: string;
@@ -83,26 +64,42 @@ interface ParamTypes {
    pSize: string;
    SIGUN_NM: string;
 }
+// interface ResponseData {
+//    PlaceThatDoATasteyFoodSt: {
+//       head: HeadData[];
+//       row: {
+//          REFINE_LOTNO_ADDR?: string;
+//          REFINE_ROADNM_ADDR?: string;
+//          REFINE_WGS84_LAT?: string;
+//          REFINE_WGS84_LOGT?: string;
+//          REFINE_ZIP_CD?: string;
+//          REPRSNT_FOOD_NM?: string;
+//          RESTRT_NM?: string;
+//          RM_MATR?: null;
+//          SIGUN_CD?: string;
+//          SIGUN_NM?: string;
+//          TASTFDPLC_TELNO?: string;
+//       }[];
+//    };
+// }
 
 const Home = () => {
    const [text, setText] = useState<string>("");
-   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const [headData, setHeadData] = useState<HeadData[]>([]); // 헤더 정보
-   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const [rowList, setRowList] = useState<never[]>([]); // 불러온 목록
    const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       setText(value);
    };
 
-   // 초기 데이터 호출
-   // const openKey: string = "1fa67d81d0db4d32bbd263f5a3cc05af";
+   // React-Query
+   // GET
    const getData = async (): Promise<void> => {
       const params: ParamTypes = {
          KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
          Type: "json",
          pIndex: "1",
-         pSize: "20",
+         pSize: "10",
          SIGUN_NM: "",
       };
       const response = await fetch(`https://openapi.gg.go.kr/PlaceThatDoATasteyFoodSt?KEY=${params.KEY}&Type=${params.Type}&pIndex=${params.pIndex}&pSize=${params.pSize}&SIGUN_NM=${params.SIGUN_NM}`);
@@ -111,20 +108,40 @@ const Home = () => {
       setRowList(result.PlaceThatDoATasteyFoodSt[1].row);
       return result;
    };
-   const { isSuccess } = useQuery({
+   useQuery({
       queryKey: ["getData"],
       queryFn: getData,
       // select: (data) => console.log(data),
       refetchOnWindowFocus: false,
    });
-   if (isSuccess) {
-      console.log("데이터 받아오기 성공!");
-   }
-
+   // POST
+   const postData = async (data: ParamTypes): Promise<void> => {
+      // console.log(data);
+      const response = await fetch(`https://openapi.gg.go.kr/PlaceThatDoATasteyFoodSt?KEY=${data.KEY}&Type=${data.Type}&pIndex=${data.pIndex}&pSize=${data.pSize}&SIGUN_NM=${data.SIGUN_NM}`);
+      const result = await response.json();
+      setHeadData(result.PlaceThatDoATasteyFoodSt[0].head);
+      setRowList(result.PlaceThatDoATasteyFoodSt[1].row);
+      return result;
+   };
+   const postMutate = useMutation({
+      mutationKey: ["postData"],
+      mutationFn: postData,
+   });
+   // Submit Func
    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      // console.log("form!");
-      // getData(text);
+      if (text.length < 3) {
+         alert("'OO시'가 되도록 입력해야 합니다.");
+      } else {
+         const mutateParams: ParamTypes = {
+            KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
+            Type: "json",
+            pIndex: "1",
+            pSize: "10",
+            SIGUN_NM: text,
+         };
+         postMutate.mutate(mutateParams);
+      }
    };
 
    return (
