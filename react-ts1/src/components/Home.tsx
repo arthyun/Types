@@ -1,7 +1,8 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import ListItem from "./ListItem";
+import { useQuery } from "@tanstack/react-query";
 
 // Custom Components
 const HomeContainer = styled.div`
@@ -56,9 +57,38 @@ interface HeadData {
    api_version?: string;
 }
 
+interface ResponseData {
+   PlaceThatDoATasteyFoodSt: {
+      head: HeadData[];
+      row: {
+         REFINE_LOTNO_ADDR?: string;
+         REFINE_ROADNM_ADDR?: string;
+         REFINE_WGS84_LAT?: string;
+         REFINE_WGS84_LOGT?: string;
+         REFINE_ZIP_CD?: string;
+         REPRSNT_FOOD_NM?: string;
+         RESTRT_NM?: string;
+         RM_MATR?: null;
+         SIGUN_CD?: string;
+         SIGUN_NM?: string;
+         TASTFDPLC_TELNO?: string;
+      }[];
+   };
+}
+
+interface ParamTypes {
+   KEY: string;
+   Type: string;
+   pIndex: string;
+   pSize: string;
+   SIGUN_NM: string;
+}
+
 const Home = () => {
    const [text, setText] = useState<string>("");
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const [headData, setHeadData] = useState<HeadData[]>([]); // 헤더 정보
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const [rowList, setRowList] = useState<never[]>([]); // 불러온 목록
    const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
@@ -66,27 +96,35 @@ const Home = () => {
    };
 
    // 초기 데이터 호출
-   const openKey: string = "1fa67d81d0db4d32bbd263f5a3cc05af";
-   const getData = async (text: string): Promise<void> => {
-      try {
-         const response = await fetch(`https://openapi.gg.go.kr/PlaceThatDoATasteyFoodSt?KEY=${openKey}&Type=json&pIndex=1&pSize=200&SIGUN_NM=${text}`);
-         const result = await response.json();
-         setHeadData(result.PlaceThatDoATasteyFoodSt[0].head);
-         setRowList(result.PlaceThatDoATasteyFoodSt[1].row);
-         return result;
-      } catch (err) {
-         console.error(err);
-      }
+   // const openKey: string = "1fa67d81d0db4d32bbd263f5a3cc05af";
+   const getData = async (): Promise<void> => {
+      const params: ParamTypes = {
+         KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
+         Type: "json",
+         pIndex: "1",
+         pSize: "20",
+         SIGUN_NM: "",
+      };
+      const response = await fetch(`https://openapi.gg.go.kr/PlaceThatDoATasteyFoodSt?KEY=${params.KEY}&Type=${params.Type}&pIndex=${params.pIndex}&pSize=${params.pSize}&SIGUN_NM=${params.SIGUN_NM}`);
+      const result = await response.json();
+      setHeadData(result.PlaceThatDoATasteyFoodSt[0].head);
+      setRowList(result.PlaceThatDoATasteyFoodSt[1].row);
+      return result;
    };
-
-   useEffect(() => {
-      getData(text);
-   }, []);
+   const { isSuccess } = useQuery({
+      queryKey: ["getData"],
+      queryFn: getData,
+      // select: (data) => console.log(data),
+      refetchOnWindowFocus: false,
+   });
+   if (isSuccess) {
+      console.log("데이터 받아오기 성공!");
+   }
 
    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       // console.log("form!");
-      getData(text);
+      // getData(text);
    };
 
    return (
