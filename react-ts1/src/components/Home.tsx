@@ -135,6 +135,7 @@ const Home = () => {
       const result = await response.json();
       setHeadData(result.PlaceThatDoATasteyFoodSt[0].head);
       setRowList(result.PlaceThatDoATasteyFoodSt[1].row);
+      setTotalCnt(result.PlaceThatDoATasteyFoodSt[0].head[0].list_total_count);
       return result;
    };
    const postMutate = useMutation({
