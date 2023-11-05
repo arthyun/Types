@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import ListItem from "./ListItem";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import PageViewCount from "./PageViewCount";
 
 // Styled Components
 const HomeContainer = styled.div`
@@ -47,6 +48,12 @@ const SearchBtn = styled.button`
    font-weight: bold;
    margin-left: 15px;
 `;
+const PageLimitContainer = styled.div`
+   display: flex;
+   gap: 1.5rem;
+   align-items: center;
+   /* justify-content: space-between; */
+`;
 
 // Types
 interface HeadData {
@@ -61,7 +68,7 @@ interface ParamTypes {
    KEY: string;
    Type: string;
    pIndex: string;
-   pSize: string;
+   pSize: number;
    SIGUN_NM: string;
 }
 // interface ResponseData {
@@ -87,6 +94,9 @@ const Home = () => {
    const [text, setText] = useState<string>("");
    const [headData, setHeadData] = useState<HeadData[]>([]); // 헤더 정보
    const [rowList, setRowList] = useState<never[]>([]); // 불러온 목록
+   const [limit, setLimit] = useState<number>(20);
+
+   // onChange Func
    const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       setText(value);
@@ -94,13 +104,13 @@ const Home = () => {
 
    // React-Query
    // GET
-   const getData = async (): Promise<void> => {
+   const getData = async (limit: number): Promise<void> => {
       const params: ParamTypes = {
          KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
          Type: "json",
          pIndex: "1",
-         pSize: "10",
-         SIGUN_NM: "",
+         pSize: limit,
+         SIGUN_NM: text,
       };
       const response = await fetch(`https://openapi.gg.go.kr/PlaceThatDoATasteyFoodSt?KEY=${params.KEY}&Type=${params.Type}&pIndex=${params.pIndex}&pSize=${params.pSize}&SIGUN_NM=${params.SIGUN_NM}`);
       const result = await response.json();
@@ -109,8 +119,8 @@ const Home = () => {
       return result;
    };
    useQuery({
-      queryKey: ["getData"],
-      queryFn: getData,
+      queryKey: ["getData", limit],
+      queryFn: async () => await getData(limit),
       // select: (data) => console.log(data),
       refetchOnWindowFocus: false,
    });
@@ -137,20 +147,21 @@ const Home = () => {
             KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
             Type: "json",
             pIndex: "1",
-            pSize: "10",
+            pSize: limit,
             SIGUN_NM: text,
          };
          postMutate.mutate(mutateParams);
       }
    };
 
-   console.log("pull 검수1");
+   console.log(limit);
 
    return (
       <>
          <Sidebar />
          <HomeContainer>
             <h1 style={{ color: "#18d382" }}>Spoon</h1>
+
             <FormSearch onSubmit={onSubmit}>
                <LabelSearch htmlFor="search">검색창</LabelSearch>
                <InputSearch
@@ -162,7 +173,15 @@ const Home = () => {
                />
                <SearchBtn type="submit">검색</SearchBtn>
             </FormSearch>
-            <span>총 {headData[0]?.list_total_count ?? 0} 개의 맛집을 불러왔습니다.</span>
+            <PageLimitContainer>
+               <PageViewCount
+                  limit={limit}
+                  setLimit={setLimit}
+               />
+               <span>
+                  총 <strong>{headData[0]?.list_total_count ?? 0}</strong> 개의 맛집을 불러왔습니다.
+               </span>
+            </PageLimitContainer>
             <ListItem rowList={rowList} />
          </HomeContainer>
       </>
