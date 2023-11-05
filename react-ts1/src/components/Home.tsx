@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import ListItem from "./ListItem";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import PageViewCount from "./PageViewCount";
+import Pagenation from "./Pagenation";
 
 // Styled Components
 const HomeContainer = styled.div`
@@ -56,8 +57,8 @@ const PageLimitContainer = styled.div`
 `;
 
 // Types
-interface HeadData {
-   list_total_count?: string;
+export interface HeadData {
+   list_total_count?: number;
    RESULT?: {
       CODE: string;
       MESSAGE: string;
@@ -67,7 +68,7 @@ interface HeadData {
 interface ParamTypes {
    KEY: string;
    Type: string;
-   pIndex: string;
+   pIndex: number;
    pSize: number;
    SIGUN_NM: string;
 }
@@ -94,7 +95,9 @@ const Home = () => {
    const [text, setText] = useState<string>("");
    const [headData, setHeadData] = useState<HeadData[]>([]); // 헤더 정보
    const [rowList, setRowList] = useState<never[]>([]); // 불러온 목록
-   const [limit, setLimit] = useState<number>(20);
+   const [pageCnt, setPageCnt] = useState<number>(1);
+   const [limit, setLimit] = useState<number>(10);
+   const [totalCnt, setTotalCnt] = useState<number>(0);
 
    // onChange Func
    const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,11 +107,11 @@ const Home = () => {
 
    // React-Query
    // GET
-   const getData = async (limit: number): Promise<void> => {
+   const getData = async (pageCnt: number, limit: number): Promise<void> => {
       const params: ParamTypes = {
          KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
          Type: "json",
-         pIndex: "1",
+         pIndex: pageCnt,
          pSize: limit,
          SIGUN_NM: text,
       };
@@ -116,11 +119,12 @@ const Home = () => {
       const result = await response.json();
       setHeadData(result.PlaceThatDoATasteyFoodSt[0].head);
       setRowList(result.PlaceThatDoATasteyFoodSt[1].row);
+      setTotalCnt(result.PlaceThatDoATasteyFoodSt[0].head[0].list_total_count);
       return result;
    };
    useQuery({
-      queryKey: ["getData", limit],
-      queryFn: async () => await getData(limit),
+      queryKey: ["getData", pageCnt, limit],
+      queryFn: async () => await getData(pageCnt, limit),
       // select: (data) => console.log(data),
       refetchOnWindowFocus: false,
    });
@@ -146,15 +150,13 @@ const Home = () => {
          const mutateParams: ParamTypes = {
             KEY: "1fa67d81d0db4d32bbd263f5a3cc05af",
             Type: "json",
-            pIndex: "1",
+            pIndex: 1,
             pSize: limit,
             SIGUN_NM: text,
          };
          postMutate.mutate(mutateParams);
       }
    };
-
-   console.log(limit);
 
    return (
       <>
@@ -183,6 +185,11 @@ const Home = () => {
                </span>
             </PageLimitContainer>
             <ListItem rowList={rowList} />
+            <Pagenation
+               pageCnt={pageCnt}
+               setPageCnt={setPageCnt}
+               totalCnt={totalCnt}
+            />
          </HomeContainer>
       </>
    );

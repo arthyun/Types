@@ -19,9 +19,9 @@ interface iProps {
 
 const ListContainer = styled.div`
    width: 100%;
-   max-height: 515px;
-   overflow-y: scroll;
-   margin-top: 15px;
+   /* max-height: 515px; */
+   /* overflow-y: scroll; */
+   margin-top: 25px;
 `;
 const ListUl = styled.ul`
    width: 100%;
@@ -42,16 +42,17 @@ const ListLi = styled.li`
 const ListDl = styled.dl`
    display: flex;
    padding: 1rem;
+   justify-content: end;
    box-sizing: border-box;
 `;
 const ListDt = styled.dt`
-   width: 45%;
+   width: 20%;
    text-align: start;
    font-weight: bold;
    padding-left: 15px;
 `;
 const ListDd = styled.dd`
-   width: 27.5%;
+   width: 30%;
 `;
 
 const ListItem: React.FC<iProps> = ({ rowList }) => {

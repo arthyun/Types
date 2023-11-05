@@ -18,11 +18,11 @@ const PageViewCount = ({ limit, setLimit }: iProps) => {
             value={limit}
             onChange={onChangeLimit}
          >
+            <option value={10}>10개</option>
             <option value={20}>20개</option>
+            <option value={30}>30개</option>
             <option value={40}>40개</option>
-            <option value={60}>60개</option>
-            <option value={80}>80개</option>
-            <option value={100}>100개</option>
+            <option value={50}>50개</option>
          </select>
       </>
    );
