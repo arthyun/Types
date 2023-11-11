@@ -56,6 +56,9 @@ const Sidebar = () => {
                <li>
                   <StyledNavLink to="/topic">Topic</StyledNavLink>
                </li>
+               <li>
+                  <StyledNavLink to="/tailwind">Tailwind</StyledNavLink>
+               </li>
             </NavUl>
          )}
       </NavContainer>
