@@ -23,9 +23,9 @@ const myMiddlewares = ((f) => devtools(persist(f, { name: 'bearStore', storage: 
 
 // Store
 const useBearStore = create<BearState>()(
-  myMiddlewares((set) => ({
+  myMiddlewares((set, get) => ({
     bears: 0,
-    increase: (by) => set((state) => ({ bears: state.bears + by }))
+    increase: (by) => set({ bears: get().bears + by })
   }))
 );
 
