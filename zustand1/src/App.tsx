@@ -1,50 +1,37 @@
+/* eslint-disable */
 import React from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
-// zustand
-import { create } from 'zustand';
+// Zustand
+import { create, StateCreator, StoreMutatorIdentifier } from 'zustand';
 import { devtools, createJSONStorage, persist } from 'zustand/middleware';
 
 // Types
-interface Count {
-  count: number;
-  setCount: (value: number) => void;
-}
-interface NewCount {
-  newCount: number;
-  setNewCount: (value: number) => void;
+interface BearState {
+  bears: number;
+  increase: (by: number) => void;
 }
 
+// Devtools, persist 합치기 ***
+type MyMiddlewares = <T, Mps extends [StoreMutatorIdentifier, unknown][] = [], Mcs extends [StoreMutatorIdentifier, unknown][] = []>(
+  f: StateCreator<T, [...Mps, ['zustand/devtools', never], ['zustand/persist', unknown]], Mcs>
+) => StateCreator<T, Mps, [['zustand/devtools', never], ['zustand/persist', T], ...Mcs]>;
+
+const myMiddlewares = ((f) => devtools(persist(f, { name: 'bearStore', storage: createJSONStorage(() => sessionStorage) }))) as MyMiddlewares;
+
 // Store
-const countStore = create<Count>()(
-  devtools(
-    persist(
-      (set, get) => ({
-        count: 0,
-        setCount: (value) => set({ count: get().count + value })
-        // setCount: (value) => set({ count: get().count + value }, true) // 덮어쓰기가 하고 싶을때
-      }),
-      {
-        name: 'count-store', // 저장소 key값
-        storage: createJSONStorage(() => sessionStorage), // 저장소 선택
-        version: 1.1
-      }
-    )
-  )
-);
-const newCountStore = create<NewCount>()(
-  devtools((set, get) => ({
-    newCount: 0,
-    setNewCount: (value) => set({ newCount: get().newCount + value })
+const useBearStore = create<BearState>()(
+  myMiddlewares((set) => ({
+    bears: 0,
+    increase: (by) => set((state) => ({ bears: state.bears + by }))
   }))
 );
 
-// components
-function App() {
-  const { count, setCount } = countStore();
-  const { newCount, setNewCount } = newCountStore();
+// Components
+const App = () => {
+  const { bears, increase } = useBearStore();
 
   return (
     <>
@@ -58,32 +45,12 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button type="button" onClick={() => setCount(3)}>
-          App Count is {count}
+        <button type="button" onClick={() => increase(3)}>
+          App bears is {bears}
         </button>
-        <br />
-        <br />
-        <button type="button" onClick={() => setNewCount(3)}>
-          App NewCount is {newCount}
-        </button>
-        <div>💼💼💼💼💼</div>
-        <div>💼💼💼💼💼</div>
-        <div>💼💼💼💼💼</div>
-
-        <Card />
       </div>
     </>
   );
-}
-
-function Card() {
-  return (
-    <div className="card">
-      {/* <button type="button" onClick={setCount2}>
-        Card Count is {count2}
-      </button> */}
-    </div>
-  );
-}
+};
 
 export default App;
