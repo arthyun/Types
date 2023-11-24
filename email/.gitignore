@@ -25,4 +25,4 @@ dist-ssr
 
 
 # delete config (server info)
-config/
+config/userInfo.json
