@@ -1,7 +1,13 @@
 // import './App.css';
 
+import AppRouter from './Router';
+
 function App() {
-  return <div className="text-3xl text-gray-300 font-bold underline">Hello World</div>;
+  return (
+    <div id="app">
+      <AppRouter />
+    </div>
+  );
 }
 
 export default App;
