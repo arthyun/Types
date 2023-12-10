@@ -15,14 +15,14 @@ const myMiddlewares = ((f) => devtools(persist(f, { name: 'userStore', storage: 
 // Types
 interface userTypes {
   userInfo: unknown;
-  setUserInfo: (data: object) => void;
+  setUserInfo: (data: { userId: string; userPass: string | number }) => void;
 }
 
 // Store
 const userInfoStore = create<userTypes>()(
   myMiddlewares((set) => ({
     userInfo: {},
-    setUserInfo: (data) => console.log(data)
+    setUserInfo: (data) => set(() => ({ userInfo: { userId: data.userId, userPass: data.userPass } }))
   }))
 );
 
@@ -75,8 +75,6 @@ const SignIn = () => {
 
   const onLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log('입력한 아이디: ' + id);
-    // console.log('입력한 비밀번호: ' + password);
     const newObject = {
       userId: id,
       userPass: password
