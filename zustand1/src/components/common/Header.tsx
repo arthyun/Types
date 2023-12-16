@@ -36,6 +36,17 @@ const Header = () => {
             <li>
               <Link to="/sub2">Sub2</Link>
             </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  window.sessionStorage.clear();
+                  window.location.replace('/');
+                }}
+              >
+                로그아웃
+              </button>
+            </li>
           </ul>
         </NavTag>
       </header>
