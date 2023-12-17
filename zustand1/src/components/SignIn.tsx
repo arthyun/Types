@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styled from 'styled-components';
+// import logo from './naver.png';
 
 // Zustand
 import { create, StateCreator, StoreMutatorIdentifier } from 'zustand';
@@ -9,31 +10,47 @@ import { devtools, createJSONStorage, persist } from 'zustand/middleware';
 const FormTag = styled.form`
   max-width: 550px;
   margin: 40vh auto;
-  padding: 1rem;
+  padding: 1.75rem 1rem;
   border-radius: 15px;
-  box-shadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
-  overflow: hidden;
+  box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
+  /* overflow: hidden; */
+  text-align: center;
   box-sizing: border-box;
+  position: relative;
+  h1 {
+    background: url('./naver.png') no-repeat;
+    background-size: cover;
+    width: 300px;
+    height: 60px;
+    text-indent: -9999px;
+    color: red;
+    overflow: hidden;
+    position: absolute;
+    top: -100px;
+    left: 130px;
+  }
   input {
-    width: 100%;
+    width: 90%;
     padding: 0.75rem 0;
     padding-left: 10px;
-    margin: 0 0 12px 0;
+    margin: 0 0 15px 0;
     border: none;
     border-bottom: 1px solid #333;
     font-size: 1.25rem;
     box-sizing: border-box;
   }
   button {
-    width: 100%;
-    background: #0300cc;
+    width: 90%;
+    background: #00c210;
+    margin-top: 20px;
     padding: 1rem 0;
     border: none;
     font-size: 1.5rem;
     color: #fff;
     transition: all 0.3s;
     &:hover {
-      background: #0081cc;
+      background: #005a21;
+      font-weight: bold;
     }
   }
 `;
@@ -98,19 +115,41 @@ const SignIn = () => {
     }
 
     if (valiCheckArr.length === 0) {
-      setUserInfo(newObject);
-      setUserConfirm();
+      const metaData: NewObjType = {
+        userId: import.meta.env.VITE_APP_ID,
+        userPass: import.meta.env.VITE_APP_PASS
+      };
+      let result: boolean = false;
+      for (const key in metaData) {
+        const metaArr: string[] = [];
+        if (metaData[key] !== id && metaData[key] !== password) {
+          metaArr.push(key);
+          alert(`${metaArr}가 일치하지 않습니다.`);
+          result = false;
+        } else {
+          result = true;
+        }
+      }
+      if (result) {
+        alert('로그인 성공');
+        setUserInfo(newObject);
+        setUserConfirm();
+      }
     } else {
-      valiCheckArr.forEach((item) => alert(`${item}를 확인해 주세요.`));
+      // valiCheckArr.forEach((item) => alert(`${item}를 확인해 주세요.`));
+      alert('Field를 입력하세요...');
     }
   };
 
   return (
-    <FormTag onSubmit={onLogin}>
-      <input type="text" name="id" value={id} onChange={onChangeUserInfo} placeholder="아이디" />
-      <input type="password" name="password" value={password} onChange={onChangeUserInfo} placeholder="비밀번호" />
-      <button type="submit">로그인</button>
-    </FormTag>
+    <>
+      <FormTag onSubmit={onLogin}>
+        <h1>Logo</h1>
+        <input type="text" name="id" value={id} onChange={onChangeUserInfo} placeholder="아이디" />
+        <input type="password" name="password" value={password} onChange={onChangeUserInfo} placeholder="비밀번호" />
+        <button type="submit">로그인</button>
+      </FormTag>
+    </>
   );
 };
 
