@@ -2,12 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '../../utils/database';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  let method = req.method;
+  let method: string | undefined = req.method;
   let status: number = res.statusCode;
 
   // DB Access
   const client = await connectDB;
-  const db = client.db('forum');
+  const db = await client.db('forum');
   const list = await db.collection('post').find().toArray();
 
   // Calc today
