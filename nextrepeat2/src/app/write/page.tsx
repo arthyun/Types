@@ -6,10 +6,14 @@ const Write = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    const response = await fetch('/api/test');
+    const response = await fetch('/api/test', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    });
     const result = await response.json();
     console.log(result);
-    // get/post 해보기
   };
 
   return (
