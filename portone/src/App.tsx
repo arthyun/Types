@@ -1,8 +1,10 @@
+/* eslint-disable */
 import { useCookies } from 'react-cookie';
 import { useEffect } from 'react';
 import reactLogo from './assets/images/react.svg';
 import viteLogo from './assets/images/vite.svg';
 import './assets/styles/App.css';
+import * as PortOne from '@portone/browser-sdk/v2';
 
 interface TestTypes {
   pg: string;
@@ -31,7 +33,6 @@ interface AppTypes {
 
 const App = () => {
   // Cookies
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
 
   // FETCH
@@ -85,25 +86,55 @@ const App = () => {
   const onClickPayment = () => {
     /* 가맹점 식별하기 */
     // const { IMP } = window;
-    window.IMP.init(import.meta.env.VITE_APP_STORE_CODE);
+    // window.IMP.init(import.meta.env.VITE_APP_STORE_CODE);
 
     /* 2. 결제 데이터 정의하기 */
-    const testData: TestTypes = {
-      pg: 'html5_inicis', // PG사
-      pay_method: 'card', // 결제수단
-      merchant_uid: `test_${new Date().getTime()}`, // 주문번호
-      name: '테스트 결제', // 주문명
-      amount: 1, // 결제금액
-      buyer_name: '손현호', // 구매자 이름
-      buyer_tel: '010-0000-0000', // 구매자 전화번호
-      buyer_email: 'heun3316@naver.com', // 구매자 이메일
-      buyer_addr: '신사동 661-16', // 구매자 주소
-      buyer_postcode: '06018' // 구매자 우편번호
-      // popup: false
-    };
+    // const testData: TestTypes = {
+    //   pg: 'html5_inicis', // PG사
+    //   pay_method: 'card', // 결제수단
+    //   merchant_uid: `test_${new Date().getTime()}`, // 주문번호
+    //   name: '테스트 결제', // 주문명
+    //   amount: 1, // 결제금액
+    //   buyer_name: '손현호', // 구매자 이름
+    //   buyer_tel: '010-0000-0000', // 구매자 전화번호
+    //   buyer_email: 'heun3316@naver.com', // 구매자 이메일
+    //   buyer_addr: '신사동 661-16', // 구매자 주소
+    //   buyer_postcode: '06018' // 구매자 우편번호
+    //   // popup: false
+    // };
 
     /* 결제 창 호출하기 */
-    window.IMP.request_pay(testData, callback);
+    // window.IMP.request_pay(testData, callback);
+
+    /* V2 - 신버전 */
+    PortOne.requestPayment({
+      // 고객사 storeId로 변경해주세요.
+      storeId: import.meta.env.VITE_APP_STORE_ID,
+      paymentId: `payment-${crypto.randomUUID()}`,
+      channelKey: 'channel-key-2d9ad4f1-6112-4fb0-b307-b4213d718590',
+      // isTestChannel: true,
+      orderName: '테스트 주문입니다.',
+      totalAmount: 1,
+      currency: 'CURRENCY_KRW',
+      pgProvider: 'PG_PROVIDER_KSNET',
+      payMethod: 'CARD',
+      card: {
+        availableCards: ['CARD_COMPANY_SAMSUNG_CARD', 'CARD_COMPANY_SHINHAN_CARD']
+      },
+      customer: {
+        customerId: 'shh',
+        fullName: 'Hyunho Sohn',
+        phoneNumber: '010-7212-8581',
+        email: 'heun3316@naver.com',
+        zipcode: '06618'
+      },
+      windowType: {
+        pc: 'IFRAME',
+        mobile: 'POPUP'
+      },
+      locale: 'KO_KR',
+      redirectUrl: 'http://localhost:5173'
+    });
   };
 
   /* 3. 콜백 함수 정의하기 */
