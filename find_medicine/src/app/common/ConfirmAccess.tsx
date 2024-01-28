@@ -8,9 +8,9 @@ const ConfirmAccess = () => {
   useEffect(() => {
     const data = sessionStorage?.getItem('visit');
     if (data === null) {
-      router.push('/access');
-    } else {
       router.push('/');
+    } else {
+      router.push('/location');
     }
   }, []);
 

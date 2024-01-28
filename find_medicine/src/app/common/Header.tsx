@@ -6,10 +6,10 @@ const Header = () => {
     <header id="headerArea" className="px-3 py-3 bg-green-400 box-border">
       <nav>
         <ul className="flex justify-between">
-          <li className="w-[75%]">
+          <li className="w-full">
             <Link href="/">Logo(Home)</Link>
           </li>
-          <li className="w-auto">
+          {/* <li className="w-auto">
             <Link href="/location">Location</Link>
           </li>
           <li className="w-auto">
@@ -17,7 +17,7 @@ const Header = () => {
           </li>
           <li className="w-auto">
             <Link href="/notice">Notice</Link>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </header>
