@@ -9,7 +9,7 @@ import Intro from './common/Intro';
 // Components
 export default function Home() {
   return (
-    <div className="w-[75%] min-w-[480px] m-auto py-10 border-2 border-red-400">
+    <div className="w-[75%] min-w-[480px] m-auto py-10">
       {/* getSession */}
       <ConfirmAccess />
       {/* MainArea */}

@@ -12,7 +12,7 @@ export const createParam = (paramObj: any) =>
 
 const getData = async () => {
   const params = {
-    serviceKey: '9D7Rg6V6wDr4R1GG9TV/Y1c4JU9ttSuq9KL8/+5PMw4tls0giUwdYXMH751nxznUp7lL3wQL0YDgFZYc/dNtwQ==',
+    serviceKey: process.env.NEXT_PUBLIC_API_KEY,
     Q0: '서울특별시', // 주소
     Q1: '강남구', // 시/도
     QT: '1', // 요일
