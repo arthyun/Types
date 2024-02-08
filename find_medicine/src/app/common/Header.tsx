@@ -1,13 +1,18 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
+
+// font-awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faHouseMedical } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   return (
-    <header id="headerArea" className="px-3 py-3 bg-green-400 box-border">
+    <header id="headerArea" className="px-6 py-3 bg-green-400 box-border">
       <nav>
         <ul className="flex justify-between">
           <li className="w-full">
-            <Link href="/">Logo(Home)</Link>
+            <Link href="/">{/* <FontAwesomeIcon icon={faHouseMedical} style={{ color: "#fff", fontSize: "28px" }} /> */}</Link>
           </li>
           {/* <li className="w-auto">
             <Link href="/location">Location</Link>

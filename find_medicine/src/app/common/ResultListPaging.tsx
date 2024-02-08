@@ -2,6 +2,12 @@
 import Link from 'next/link';
 import { useMemo } from 'react';
 
+// font-awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { IconProp } from '@fortawesome/fontawesome-svg-core';
+// import { faMap } from '@fortawesome/free-regular-svg-icons';
+import { faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+
 interface iProps<T> {
   limit: T;
   page: T;
@@ -36,32 +42,32 @@ const ResultListPaging = ({ limit, page, totalpage, totalcnt, setPageCnt }: iPro
     <div className="pagination">
       {page !== 1 && (
         <>
-          <Link href="" onClick={() => setPageCnt(1)} className="first" aria-disabled>
-            처음 페이지
+          <Link href="" onClick={() => setPageCnt(1)} className="mr-2" aria-disabled>
+            <FontAwesomeIcon icon={faAnglesLeft} />
           </Link>
-          <Link href="" onClick={() => setPageCnt(page - 1)} className="prev" aria-disabled>
-            이전 페이지
+          <Link href="" onClick={() => setPageCnt(page - 1)} className="mr-2" aria-disabled>
+            <FontAwesomeIcon icon={faChevronLeft} />
           </Link>
         </>
       )}
       {pageArray.map((item, i) =>
         item === page ? (
-          <strong key={item} aria-current="page">
+          <strong key={item} aria-current="page" className="px-1.5 py-1 rounded-md bg-[#29F2A9] mx-1 text-[#1E4DD9]">
             {item}
           </strong>
         ) : (
-          <Link href="" onClick={() => setPageCnt(item)} key={`pagination_${item}`}>
+          <Link href="" onClick={() => setPageCnt(item)} key={`pagination_${item}`} className="mx-1">
             {item}
           </Link>
         )
       )}
       {page < totalpage && (
         <>
-          <Link href="" onClick={() => setPageCnt(page + 1)} className="next" aria-disabled>
-            다음 페이지
+          <Link href="" onClick={() => setPageCnt(page + 1)} className="ml-2" aria-disabled>
+            <FontAwesomeIcon icon={faChevronRight} />
           </Link>
-          <Link href="" onClick={() => setPageCnt(totalpage)} className="last" aria-disabled>
-            마지막 페이지
+          <Link href="" onClick={() => setPageCnt(totalpage)} className="ml-2" aria-disabled>
+            <FontAwesomeIcon icon={faAnglesRight} />
           </Link>
         </>
       )}

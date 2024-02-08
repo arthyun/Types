@@ -7,19 +7,23 @@ import SearchAndList from './components/SearchAndList';
 // 유틸
 export const createParam = (paramObj: any) =>
   Object.keys(paramObj)
-    .map((key) => (Array.isArray(paramObj[key]) ? paramObj[key].map((value: any) => `${key}=${encodeURIComponent(value)}`).join('&') : `${key}=${encodeURIComponent(paramObj[key] ?? '')}`))
+    .map((key) =>
+      Array.isArray(paramObj[key])
+        ? paramObj[key].map((value: any) => `${key}=${encodeURIComponent(value)}`).join('&')
+        : `${key}=${encodeURIComponent(paramObj[key] ?? '')}`
+    )
     .join('&');
 
 const getData = async () => {
   const params = {
     serviceKey: process.env.NEXT_PUBLIC_API_KEY,
-    Q0: '서울특별시', // 주소
-    Q1: '강남구', // 시/도
+    Q0: '', // 시/도
+    Q1: '', // 시/군/구
     QT: '1', // 요일
     QN: '', // 기관명
     ORD: 'NAME', // 순서
     pageNo: '1',
-    numOfRows: '10'
+    numOfRows: '10',
   };
   const response = await axios.get(`https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?${createParam(params)}`);
   const result = response.data;
