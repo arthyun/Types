@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import SearchAndList from './components/SearchAndList';
+import LocationFooter from './components/LocationFooter';
 // import Image from 'next/image';
 // import backGroundImage from '/public/pharmacy.jpg';
 
@@ -31,15 +32,19 @@ const getData = async () => {
 };
 
 const Location = async () => {
+  // fetch data
   const result = await getData();
   let data = result.response?.body?.items?.item;
   let pagiData = result.response?.body;
 
   return (
-    <div className="locationWrap">
-      {/* <Image src={backGroundImage} alt="bg" layout="fill" objectFit="auto" objectPosition="center" className="z-0" /> */}
-      <SearchAndList data={data} pagiData={pagiData} />
-    </div>
+    <>
+      <div className="locationWrap">
+        {/* <Image src={backGroundImage} alt="bg" layout="fill" objectFit="auto" objectPosition="center" className="z-0" /> */}
+        <SearchAndList data={data} pagiData={pagiData} />
+      </div>
+      <LocationFooter />
+    </>
   );
 };
 
