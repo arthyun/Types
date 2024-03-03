@@ -4,7 +4,7 @@ import ResultListPaging from '../../common/ResultListPaging';
 import ResultPageView from '@/app/common/ResultPageView';
 import ResultNoData from '@/app/common/ResultNoData';
 import LocationHeader from './LocationHeader';
-import { getData } from '../page';
+import { createParam } from '../page';
 import axios from 'axios';
 
 // font-awesome
@@ -40,12 +40,12 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
   // 검색
   const onSubmit = async (e?: FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();
+    setSsr(false);
     const result = await getData(selectForm1, selectForm2, text, limit);
     // result?.response?.body?.items?.item
     setRowList(Array.isArray(result?.response?.body?.items?.item) ? result?.response?.body?.items?.item : []);
     setPageCnt(result?.response?.body?.pageNo);
     setTotalCnt(result?.response?.body?.totalCount);
-    setSsr(false);
   };
 
   // 국토명 API 호출
@@ -64,6 +64,22 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
     const response = await axios.get(
       `/req/data?key=${process.env.NEXT_PUBLIC_SIDO_KEY}&domain=http://localhost:3000&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO`
     );
+    const result = response.data;
+    return result;
+  };
+
+  const getData = async (text1?: string, text2?: string, text3?: string, limit?: number, pageCnt?: number) => {
+    const params = {
+      serviceKey: process.env.NEXT_PUBLIC_API_KEY,
+      Q0: text1 ?? '', // 시/도
+      Q1: text2 ?? '', // 시/군/구
+      QT: '1', // 요일
+      QN: text3 ?? '', // 기관명
+      ORD: 'NAME', // 순서
+      pageNo: pageCnt ?? '1',
+      numOfRows: limit ?? '10'
+    };
+    const response = await axios.get(`https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?${createParam(params)}`);
     const result = response.data;
     return result;
   };

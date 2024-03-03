@@ -11,7 +11,7 @@ export const createParam = (paramObj: any) =>
     )
     .join('&');
 
-export const getData = async (text1?: string, text2?: string, text3?: string, limit?: number, pageCnt?: number) => {
+const getFirstData = async (text1?: string, text2?: string, text3?: string, limit?: number, pageCnt?: number) => {
   const params = {
     serviceKey: process.env.NEXT_PUBLIC_API_KEY,
     Q0: text1 ?? '', // 시/도
@@ -29,7 +29,7 @@ export const getData = async (text1?: string, text2?: string, text3?: string, li
 
 const Location = async () => {
   // fetch data
-  const result = await getData();
+  const result = await getFirstData();
   let data = result.response?.body?.items?.item;
   let pagiData = result.response?.body;
 
