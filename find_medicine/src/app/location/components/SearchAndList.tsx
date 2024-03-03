@@ -2,6 +2,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 import ResultListPaging from '../../common/ResultListPaging';
 import ResultPageView from '@/app/common/ResultPageView';
+import ResultNoData from '@/app/common/ResultNoData';
 import LocationHeader from './LocationHeader';
 import { getData } from '../page';
 import axios from 'axios';
@@ -40,7 +41,8 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
   const onSubmit = async (e?: FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();
     const result = await getData(selectForm1, selectForm2, text, limit);
-    setRowList(Array.isArray(result?.response?.body?.items?.item) ? result?.response?.body?.items?.item : [result?.response?.body?.items?.item]);
+    // result?.response?.body?.items?.item
+    setRowList(Array.isArray(result?.response?.body?.items?.item) ? result?.response?.body?.items?.item : []);
     setPageCnt(result?.response?.body?.pageNo);
     setTotalCnt(result?.response?.body?.totalCount);
     setSsr(false);
@@ -68,9 +70,7 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
 
   //  화면 진입시
   useEffect(() => {
-    getSido().then((res) =>
-      setSidoInfo(res.response.result.featureCollection.features.reduce((acc: any, cur: any) => acc.concat(cur.properties), []))
-    );
+    getSido().then((res) => setSidoInfo(res.response.result.featureCollection.features.reduce((acc: any, cur: any) => acc.concat(cur.properties), [])));
     if (!ssr) {
       getData(selectForm1, selectForm2, text, limit, pageCnt).then((result) => {
         setRowList(result.response?.body?.items?.item);
@@ -89,7 +89,7 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
     }
   }, [selectForm1]);
 
-  /* 기존과 다르게 페이지뷰와 페이지네이션에 setSsr() 추가됌 */
+  /* 기존과 다르게 페이지뷰와 페이지네이션에 setSsr() 추가 */
   return (
     <div className="clientSide bg-white p-16 box-border text-center">
       <LocationHeader
@@ -117,15 +117,15 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
                       <dt className="font-bold">
                         <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
                         {/* {item.dutyAddr} */}
-                        {item.dutyAddr.split(',')[0]}
+                        {item?.dutyAddr.split(',')[0]}
                       </dt>
                       <dd className="my-2.5">
                         <FontAwesomeIcon icon={faHeart} className="mr-2" />
-                        {item.dutyName}
+                        {item?.dutyName}
                       </dd>
                       <dd>
                         <FontAwesomeIcon icon={faPhone} className="mr-2" />
-                        {item.dutyTel1}
+                        {item?.dutyTel1}
                       </dd>
                       {/* <dd>{item.wgs84Lat}</dd>
                 <dd>{item.wgs84Lon}</dd> */}
@@ -135,9 +135,9 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
                       onClick={() => {
                         const openPopup = window.open('/navermap', '네이버지도 팝업', 'status=no,width=500px,height=650px') as Window;
                         openPopup.opener.sendData = {
-                          lat: item.wgs84Lat,
-                          lon: item.wgs84Lon,
-                          hpid: item.hpid,
+                          lat: item?.wgs84Lat,
+                          lon: item?.wgs84Lon,
+                          hpid: item?.hpid
                         };
                       }}
                     >
@@ -155,15 +155,15 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
                       <dt className="font-bold">
                         <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
                         {/* {item.dutyAddr} */}
-                        {item.dutyAddr.split(',')[0]}
+                        {item?.dutyAddr.split(',')[0]}
                       </dt>
                       <dd className="my-2.5">
                         <FontAwesomeIcon icon={faHeart} className="mr-2" />
-                        {item.dutyName}
+                        {item?.dutyName}
                       </dd>
                       <dd>
                         <FontAwesomeIcon icon={faPhone} className="mr-2" />
-                        {item.dutyTel1}
+                        {item?.dutyTel1}
                       </dd>
                       {/* <dd>{item.wgs84Lat}</dd>
                 <dd>{item.wgs84Lon}</dd> */}
@@ -173,9 +173,9 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
                       onClick={() => {
                         const openPopup = window.open('/navermap', '네이버지도 팝업', 'status=no,width=500px,height=650px') as Window;
                         openPopup.opener.sendData = {
-                          lat: item.wgs84Lat,
-                          lon: item.wgs84Lon,
-                          hpid: item.hpid,
+                          lat: item?.wgs84Lat,
+                          lon: item?.wgs84Lon,
+                          hpid: item?.hpid
                         };
                       }}
                     >
@@ -186,15 +186,9 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
                 );
               })}
         </ul>
+        {rowList?.length === 0 && <ResultNoData />}
       </div>
-      <ResultListPaging
-        limit={limit}
-        page={pageCnt || pagiData.pageNo}
-        totalpage={totalpage}
-        totalcnt={totalcnt || pagiData.totalCount}
-        setPageCnt={setPageCnt}
-        setSsr={setSsr}
-      />
+      <ResultListPaging limit={limit} page={pageCnt || pagiData.pageNo} totalpage={totalpage} totalcnt={totalcnt || pagiData.totalCount} setPageCnt={setPageCnt} setSsr={setSsr} />
     </div>
   );
 };

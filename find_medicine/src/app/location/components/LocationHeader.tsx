@@ -24,22 +24,8 @@ interface IProps {
   siGunGu: string[] | any[];
 }
 
-const LocationHeader = ({
-  onSubmit,
-  selectForm1,
-  selectForm2,
-  setSelectForm1,
-  setSelectForm2,
-  text,
-  setText,
-  onChange,
-  setSsr,
-  sidoInfo,
-  siGunGu,
-}: IProps) => {
+const LocationHeader = ({ onSubmit, selectForm1, selectForm2, setSelectForm1, setSelectForm2, text, setText, onChange, setSsr, sidoInfo, siGunGu }: IProps) => {
   //  const formRef: any | HTMLFormElement = useRef(undefined);
-
-  const router = useRouter();
 
   const onReset = async () => {
     try {
