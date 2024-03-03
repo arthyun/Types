@@ -31,7 +31,7 @@ const fetchHpidData = async () => {
     serviceKey: process.env.NEXT_PUBLIC_API_KEY,
     HPID: window.opener.sendData.hpid,
     pageNo: '1',
-    numOfRows: '10',
+    numOfRows: '10'
   };
   try {
     const result = await axios.get(`https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyBassInfoInqire?${createParam(params)}`);
@@ -71,14 +71,14 @@ const NaverMapComponent = () => {
         zoom: 15,
         zoomControlOptions: {
           style: naver.maps.ZoomControlStyle.SMALL,
-          position: naver.maps.Position.TOP_RIGHT,
+          position: naver.maps.Position.TOP_RIGHT
         },
-        mapTypeControl: true,
+        mapTypeControl: true
       }));
       //마커 설정
       mapRef.current = new naver.maps.Marker({
         map,
-        position: location, //마커 좌표
+        position: location //마커 좌표
       });
     }
   }, [lat, lng]);

@@ -1,14 +1,9 @@
 'use client';
-import React, { ChangeEvent, FormEvent, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
-import { getData } from '../page';
-import { useRouter } from 'next/navigation';
+import React, { ChangeEvent, FormEvent, SetStateAction } from 'react';
 
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouseMedical } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faMap } from '@fortawesome/free-regular-svg-icons';
-import axios from 'axios';
 
 interface IProps {
   onSubmit: (e?: FormEvent<HTMLFormElement>) => Promise<void>;
