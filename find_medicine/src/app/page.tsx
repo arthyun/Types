@@ -1,4 +1,4 @@
-import Intro from './common/Intro';
+import Intro from './common/Intro/Intro';
 
 // font-awesome
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -7,10 +7,10 @@ config.autoAddCss = false;
 
 // Components
 export default function Home() {
-  return (
-    <div className="w-[75%] min-w-[480px] m-auto py-10">
-      {/* MainArea */}
-      <Intro />
-    </div>
-  );
+   return (
+      <div className="w-[75%] min-w-[480px] m-auto py-10">
+         {/* MainArea */}
+         <Intro />
+      </div>
+   );
 }

@@ -1,21 +1,13 @@
+'use client';
 import React, { SetStateAction } from 'react';
 
-const ResultPageView = ({
-   limit,
-   setLimit,
-   setSsr,
-}: {
-   limit: number;
-   setLimit: React.Dispatch<SetStateAction<number>>;
-   setSsr: React.Dispatch<SetStateAction<boolean>>;
-}) => {
+const ResultPageView = ({ limit, setLimit }: { limit: number; setLimit: React.Dispatch<SetStateAction<number>> }) => {
    return (
       <div className="limitArea mb-2">
          <select
             value={limit}
             onChange={(e) => {
                setLimit(Number(e.target.value));
-               setSsr(false);
             }}
          >
             <option value="10">10</option>
