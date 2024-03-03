@@ -70,7 +70,7 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
 
   //  화면 진입시
   useEffect(() => {
-    // getSido().then((res) => setSidoInfo(res.response.result?.featureCollection?.features?.reduce((acc: any, cur: any) => acc.concat(cur.properties), [])));
+    getSido().then((res) => setSidoInfo(res.response.result?.featureCollection?.features?.reduce((acc: any, cur: any) => acc.concat(cur.properties), [])));
     if (!ssr) {
       getData(selectForm1, selectForm2, text, limit, pageCnt).then((result) => {
         setRowList(result.response?.body?.items?.item);
@@ -188,7 +188,15 @@ const SearchAndList = ({ data, pagiData }: { data: any; pagiData: any }) => {
         </ul>
         {!ssr && rowList?.length === 0 && <ResultNoData />}
       </div>
-      <ResultListPaging limit={limit} page={pageCnt || pagiData.pageNo} totalpage={totalpage} totalcnt={totalcnt || pagiData.totalCount} setPageCnt={setPageCnt} setSsr={setSsr} />
+      <ResultListPaging
+        limit={limit}
+        page={pageCnt || pagiData.pageNo}
+        totalpage={totalpage}
+        totalcnt={totalcnt || pagiData.totalCount}
+        setPageCnt={setPageCnt}
+        ssr={ssr}
+        setSsr={setSsr}
+      />
     </div>
   );
 };
