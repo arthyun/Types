@@ -1,7 +1,7 @@
-'use client';
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+"use client";
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -11,11 +11,11 @@ export default function Navigation() {
       <ul>
         <li>
           <Link href="/">Home</Link>
-          {pathname === '/' ? ' VVV' : ''}
+          {pathname === "/" ? " VVV" : ""}
         </li>
         <li>
           <Link href="/about-us">About Us</Link>
-          {pathname === '/about-us' ? ' VVV' : ''}
+          {pathname === "/about-us" ? " VVV" : ""}
         </li>
       </ul>
     </nav>
