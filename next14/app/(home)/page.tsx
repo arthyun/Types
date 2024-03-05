@@ -1,14 +1,23 @@
 import { Metadata } from 'next';
-import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Home'
 };
 
-const URL: string = process.env.NEXT_PUBLIC_API_URL ?? '';
+/**
+ * /movies/:id
+ * /movies/:id/credits
+ * /movies/:id/videos
+ * /movies/:id/providers
+ * /movies/:id/similar
+ */
+
+export const URL: string = process.env.NEXT_PUBLIC_API_URL ?? '';
 
 const getMovies = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // 지정한 시간만큼 기다렸다가 다음 함수 호출 시킴
   const response = await fetch(URL);
   const json = await response.json();
   return json;
@@ -18,5 +27,19 @@ const getMovies = async () => {
 export default async function Home() {
   const movies = await getMovies();
 
-  return <div className='z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex'>{JSON.stringify(movies)}</div>;
+  return (
+    <div>
+      <ul className='list-disc pl-8'>
+        {movies?.map((movie: any, index: number) => {
+          return (
+            <li key={index}>
+              <Link href={`/movies/${movie.id}`} className='hover:font-bold hover:bg-red-400 block'>
+                {movie.title}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
