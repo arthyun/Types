@@ -2,17 +2,18 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react';
 
-export const metadata: Metadata = {
-  title: 'Home'
-};
-
 /**
+ * 사용할 URL들
  * /movies/:id
  * /movies/:id/credits
  * /movies/:id/videos
  * /movies/:id/providers
  * /movies/:id/similar
  */
+
+export const metadata: Metadata = {
+  title: 'Home'
+};
 
 export const URL: string = process.env.NEXT_PUBLIC_API_URL ?? '';
 
@@ -40,6 +41,8 @@ export default async function Home() {
           );
         })}
       </ul>
+      {/* 버튼 테스트 */}
+      {/* <TestBtn id={movies[0].id} /> */}
     </div>
   );
 }
