@@ -8,6 +8,7 @@ const getVideos = async (id: string) => {
   return json;
 };
 
+/* 내려받은 props를 이용하여 fetch */
 export default async function MovieVideos({ id }: { id: string }) {
   const videos = await getVideos(id);
 
