@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="wrap">
           {/* 세션스토리지를 확인하여 값이 없으면 '/'으로 강제 리다이렉트 */}
-          <ConfirmAccess />
+          {/* <ConfirmAccess /> */}
           {/* 헤더 숨김 */}
           {/* <Header /> */}
           <main className="w-full box-border">{children}</main>

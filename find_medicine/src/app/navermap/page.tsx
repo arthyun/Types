@@ -1,6 +1,7 @@
 'use client';
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
+import LoadingSplash from '../common/LoadingSplash';
 import { createParam } from '../location/page';
 
 interface InfoProps {
@@ -86,12 +87,16 @@ const NaverMapComponent = () => {
   //  onClick={onFullScreen} isFullScreen={fullScreen}
   return (
     <div className="w-full h-[100vh] px-10 py-14 bg-[#2573D9] relative">
-      <div id="map" ref={mapRef} style={{ width: '85%', height: '350px', margin: '0 auto', borderRadius: '10px' }} />
+      <Suspense fallback={<LoadingSplash />}>
+        <div id="map" ref={mapRef} style={{ width: '85%', height: '350px', margin: '0 auto', borderRadius: '10px' }} />
+      </Suspense>
+
       <dl className="w-[85%] m-auto my-8">
         <dt className="font-bold my-2 text-white">{pharmacyInfo?.dutyAddr?.split(',')[0]}</dt>
         <dd className="font-bold my-2 text-white">{pharmacyInfo?.dutyName}</dd>
         <dd className="font-bold my-2 text-white">{pharmacyInfo?.dutyTel1}</dd>
       </dl>
+
       <span
         className="block bg-[#49F2D3] text-[#333] w-[85%] h-[40px] m-auto leading-10 text-center text-lg font-bold rounded-md cursor-pointer hover:text-black hover:bg-[#1cc6a7] transition-all duration-300"
         onClick={() => window.close()}
