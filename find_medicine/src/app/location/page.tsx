@@ -15,9 +15,7 @@ import { faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 // 유틸
 export const createParam = (paramObj: any) =>
   Object.keys(paramObj)
-    .map((key) =>
-      Array.isArray(paramObj[key]) ? paramObj[key].map((value: any) => `${key}=${encodeURIComponent(value)}`).join('&') : `${key}=${encodeURIComponent(paramObj[key] ?? '')}`
-    )
+    .map((key) => (Array.isArray(paramObj[key]) ? paramObj[key].map((value: any) => `${key}=${encodeURIComponent(value)}`).join('&') : `${key}=${encodeURIComponent(paramObj[key] ?? '')}`))
     .join('&');
 
 const getData = async (serviceKey: string, Q0: string, Q1: string, QT: string, QN: string, ORD: string, pageNo: number, numOfRows: number) => {
@@ -49,7 +47,7 @@ const Location = async (props: any) => {
   //   console.log(pagiData.totalCount);
 
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <>
       <div className='locationWrap'>
         <div className='clientSide bg-white p-16 box-border text-center'>
           <div className='listArea text-start w-[85%] mx-auto my-10'>
@@ -85,7 +83,7 @@ const Location = async (props: any) => {
         </div>
       </div>
       <LocationFooter />
-    </Suspense>
+    </>
   );
 };
 
