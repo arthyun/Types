@@ -1,26 +1,46 @@
 /* eslint-disable */
 'use client';
-import Link from 'next/link';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { createParam } from '../util/stringUtils';
+import Link from 'next/link';
 
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { IconProp } from '@fortawesome/fontawesome-svg-core';
-// import { faMap } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 
 interface iProps<T> {
-  limit: T;
+  serviceKey?: string;
+  Q0: string;
+  Q1: string;
+  QT: string;
+  QN: string;
+  ORD: string;
   page: T;
-  totalpage?: any | number | bigint;
+  limit?: T;
   totalcnt: any | number | bigint;
-  setPageCnt?: React.Dispatch<React.SetStateAction<T>>;
-  ssr?: boolean;
-  setSsr?: React.Dispatch<React.SetStateAction<boolean>>;
+  totalpage?: any | number | bigint;
 }
 
-const ResultListPaging = ({ limit, page, totalcnt }: iProps<number>) => {
+const ResultListPaging = ({ serviceKey, Q0, Q1, QT, QN, ORD, page, limit, totalcnt }: iProps<number>) => {
+  const router = useRouter();
+
+  const params: { serviceKey: string | undefined; Q0: string; Q1: string; QT: string; QN: string; ORD: string; pageNo?: number; numOfRows?: number } = {
+    serviceKey: process.env.NEXT_PUBLIC_API_KEY ?? serviceKey,
+    Q0: Q0 ?? '', // 시/도
+    Q1: Q1 ?? '', // 시/군/구
+    QT: QT ?? '1', // 요일
+    QN: QN ?? '', // 기관명
+    ORD: ORD ?? 'NAME', // 순서
+    numOfRows: limit ?? 10
+  };
+
+  const changePage = (e: any, num: number) => {
+    e.preventDefault();
+    params.pageNo = num;
+    router.push(`/location?${createParam(params)}`);
+  };
+
   // 10개씩 보여주기
   // 현재 페이지 22개일 때 firstPage 2 * 10
   // page : 현재페이지
@@ -43,41 +63,40 @@ const ResultListPaging = ({ limit, page, totalcnt }: iProps<number>) => {
     } else return [];
   }, [totalpage, page]);
 
-  const router = useRouter();
-
   return (
-    <div className="pagination">
+    <div className='pagination'>
       {page !== 1 && (
         <>
-          <Link href={`/location?serviceKey=${process.env.NEXT_PUBLIC_API_KEY}&Q0=&Q1=&QT=1&QN=&ORD=NAME&pageNo=1&numOfRows=${limit}`} className="mr-2" aria-disabled>
+          {/* 맨앞 페이지로 */}
+          <Link href='/#' onClick={(e) => changePage(e, 1)} className='mr-2' aria-disabled>
             <FontAwesomeIcon icon={faAnglesLeft} />
           </Link>
-          <Link href={`/location?serviceKey=${process.env.NEXT_PUBLIC_API_KEY}&Q0=&Q1=&QT=1&QN=&ORD=NAME&pageNo=${page - 1}&numOfRows=${limit}`} className="mr-2" aria-disabled>
+          {/* 이전 페이지로 */}
+          <Link href='/#' onClick={(e) => changePage(e, page - 1)} className='mr-2' aria-disabled>
             <FontAwesomeIcon icon={faChevronLeft} />
           </Link>
         </>
       )}
+      {/* 클릭한 페이지로 */}
       {pageArray.map((item, i) =>
         item === page ? (
-          <strong key={item} aria-current="page" className="px-1.5 py-1 rounded-md bg-[#29F2A9] mx-1 text-[#1E4DD9]">
+          <strong key={item} aria-current='page' className='px-1.5 py-1 rounded-md bg-[#29F2A9] mx-1 text-[#1E4DD9]'>
             {item}
           </strong>
         ) : (
-          <Link
-            href={`/location?serviceKey=${process.env.NEXT_PUBLIC_API_KEY}&Q0=&Q1=&QT=1&QN=&ORD=NAME&pageNo=${item}&numOfRows=${limit}`}
-            key={`pagination_${item}`}
-            className="mx-1"
-          >
+          <Link href='/#' onClick={(e) => changePage(e, item)} key={`pagination_${i}`} className='mx-1'>
             {item}
           </Link>
         )
       )}
       {page < totalpage && (
         <>
-          <Link href={`/location?serviceKey=${process.env.NEXT_PUBLIC_API_KEY}&Q0=&Q1=&QT=1&QN=&ORD=NAME&pageNo=${page + 1}&numOfRows=${limit}`} className="ml-2" aria-disabled>
+          {/* 다음 페이지로 */}
+          <Link href='/#' onClick={(e) => changePage(e, page + 1)} className='mr-2' aria-disabled>
             <FontAwesomeIcon icon={faChevronRight} />
           </Link>
-          <Link href={`/location?serviceKey=${process.env.NEXT_PUBLIC_API_KEY}&Q0=&Q1=&QT=1&QN=&ORD=NAME&pageNo=${totalpage}&numOfRows=${limit}`} className="ml-2" aria-disabled>
+          {/* 마지막 페이지로 */}
+          <Link href='/#' onClick={(e) => changePage(e, totalpage)} className='mr-2' aria-disabled>
             <FontAwesomeIcon icon={faAnglesRight} />
           </Link>
         </>

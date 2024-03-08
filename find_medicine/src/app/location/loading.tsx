@@ -1,5 +1,6 @@
 import React from 'react';
+import LoadingSplash from '../common/LoadingSplash';
 
 export default function Loading() {
-  return <h2>Loading...</h2>;
+  return <LoadingSplash />;
 }

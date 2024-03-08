@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { createParam } from '../location/page';
+import { createParam } from '@/app/util/stringUtils';
 
 interface InfoProps {
   dutyAddr?: string;

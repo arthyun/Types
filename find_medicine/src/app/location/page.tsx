@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import axios from 'axios';
 import OpenMap from './components/OpenMap';
 import LocationFooter from './components/LocationFooter';
@@ -12,22 +12,27 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faMap, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 
-// 유틸
-export const createParam = (paramObj: any) =>
-  Object.keys(paramObj)
-    .map((key) => (Array.isArray(paramObj[key]) ? paramObj[key].map((value: any) => `${key}=${encodeURIComponent(value)}`).join('&') : `${key}=${encodeURIComponent(paramObj[key] ?? '')}`))
-    .join('&');
+interface iProps<T> {
+  serviceKey: T;
+  Q0: T;
+  Q1: T;
+  QT: T;
+  QN: T;
+  ORD: T;
+  pageNo: number;
+  numOfRows: number;
+}
 
-const getData = async (serviceKey: string, Q0: string, Q1: string, QT: string, QN: string, ORD: string, pageNo: number, numOfRows: number) => {
+const getData = async (serviceKey: string | undefined, Q0: string, Q1: string, QT: string, QN: string, ORD: string, pageNo: number, numOfRows: number) => {
   const params = {
-    serviceKey: process.env.NEXT_PUBLIC_API_KEY,
+    serviceKey: process.env.NEXT_PUBLIC_API_KEY ?? serviceKey,
     Q0: Q0 ?? '', // 시/도
     Q1: Q1 ?? '', // 시/군/구
-    QT: QT, // 요일
+    QT: QT ?? '1', // 요일
     QN: QN ?? '', // 기관명
-    ORD: ORD, // 순서
-    pageNo: pageNo,
-    numOfRows: numOfRows
+    ORD: ORD ?? 'NAME', // 순서
+    pageNo: pageNo ?? 1,
+    numOfRows: numOfRows ?? 10
   };
   //   await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await axios.get(`https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire`, { params });
@@ -35,23 +40,18 @@ const getData = async (serviceKey: string, Q0: string, Q1: string, QT: string, Q
   return result;
 };
 
-const Location = async (props: any) => {
-  const { serviceKey, Q0, Q1, QT, QN, ORD, pageNo, numOfRows } = props.searchParams;
-
-  // fetch data
+const Location = async ({ searchParams }: { searchParams: iProps<string> }) => {
+  const { serviceKey, Q0, Q1, QT, QN, ORD, pageNo, numOfRows }: iProps<string> = searchParams;
   const result = await getData(serviceKey, Q0, Q1, QT, QN, ORD, pageNo, numOfRows);
   let data = result.response?.body?.items?.item;
   let pagiData = result.response?.body;
-  //   console.log(pagiData.pageNo);
-  //   console.log(pagiData.numOfRows);
-  //   console.log(pagiData.totalCount);
 
   return (
     <>
       <div className='locationWrap'>
         <div className='clientSide bg-white p-16 box-border text-center'>
           <div className='listArea text-start w-[85%] mx-auto my-10'>
-            <ResultPageView limit={pagiData.numOfRows} page={pageNo} />
+            <ResultPageView serviceKey={serviceKey} Q0={Q0} Q1={Q1} QT={QT} QN={QN} ORD={ORD} page={pagiData?.pageNo} limit={pagiData?.numOfRows} />
             <ul className='w-full flex flex-wrap justify-center gap-2 m-auto'>
               {data?.map((item: any, index: number) => {
                 return (
@@ -79,7 +79,7 @@ const Location = async (props: any) => {
             </ul>
             {data?.length === 0 && <ResultNoData />}
           </div>
-          <ResultListPaging limit={pagiData.numOfRows} page={pagiData.pageNo} totalcnt={pagiData.totalCount} />
+          <ResultListPaging serviceKey={serviceKey} Q0={Q0} Q1={Q1} QT={QT} QN={QN} ORD={ORD} page={pagiData?.pageNo} limit={pagiData?.numOfRows} totalcnt={pagiData?.totalCount} />
         </div>
       </div>
       <LocationFooter />
