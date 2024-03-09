@@ -45,6 +45,7 @@ const Location = async ({ searchParams }: { searchParams: iProps<string> }) => {
   const result = await getData(serviceKey, Q0, Q1, QT, QN, ORD, pageNo, numOfRows);
   let data = result.response?.body?.items?.item;
   let pagiData = result.response?.body;
+  // console.log(data);
 
   return (
     <>
@@ -77,7 +78,7 @@ const Location = async ({ searchParams }: { searchParams: iProps<string> }) => {
                 );
               })}
             </ul>
-            {data?.length === 0 && <ResultNoData />}
+            {(data === undefined && <ResultNoData />) || (data?.length === 0 && <ResultNoData />)}
           </div>
           <ResultListPaging serviceKey={serviceKey} Q0={Q0} Q1={Q1} QT={QT} QN={QN} ORD={ORD} page={pagiData?.pageNo} limit={pagiData?.numOfRows} totalcnt={pagiData?.totalCount} />
         </div>

@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import backGroundImage from '/public/pharmacy.jpg';
-import IntroSession from './components/IntroSession';
+// import IntroSession from './components/IntroSession';
+import { executePool } from './util/database';
 
 // font-awesome
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -9,7 +10,11 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
 // Components
-export default function Home() {
+export default async function Home() {
+  const sql = 'select * from user_info'; // 쿼리문
+  const dbData = await executePool(sql, '');
+  // console.log(dbData);
+
   return (
     <div className='w-[75%] min-w-[480px] m-auto py-10'>
       {/* MainArea */}
