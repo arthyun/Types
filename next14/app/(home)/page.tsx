@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
+import Movie from '@/components/Movie';
+import styles from '@/styles/home.module.css';
 
 /**
  * 사용할 URL들
@@ -29,20 +31,10 @@ export default async function Home() {
   const movies = await getMovies();
 
   return (
-    <div>
-      <ul className='list-disc pl-8'>
-        {movies?.map((movie: any, index: number) => {
-          return (
-            <li key={index}>
-              <Link href={`/movies/${movie.id}`} className='hover:font-bold hover:bg-red-400 block'>
-                {movie.title}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      {/* 버튼 테스트 */}
-      {/* <TestBtn id={movies[0].id} /> */}
+    <div className={styles.container}>
+      {movies?.map((movie: any, index: number) => {
+        return <Movie key={movie.id} id={movie.id} title={movie.title} poster_path={movie.poster_path} />;
+      })}
     </div>
   );
 }

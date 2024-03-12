@@ -1,14 +1,15 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import styles from '@/styles/navigation.module.css';
 import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className='border-b-2 mb-4'>
-      <ul className='flex gap-2 p-2'>
+    <nav className={styles.nav}>
+      <ul>
         <li>
           <Link href='/'>Home</Link>
           {pathname === '/' ? ' 💥' : ''}
