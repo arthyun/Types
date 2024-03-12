@@ -5,6 +5,7 @@ import LocationFooter from './components/LocationFooter';
 import ResultPageView from '../common/ResultPageView';
 import ResultListPaging from '../common/ResultListPaging';
 import ResultNoData from '../common/ResultNoData';
+import LocationHeader from './components/LocationHeader';
 
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,6 +50,8 @@ const Location = async ({ searchParams }: { searchParams: iProps<string> }) => {
 
   return (
     <>
+      {/* layout wrapper 오류로 인해 헤더 이곳에 추가함 */}
+      <LocationHeader />
       <div className='locationWrap'>
         <div className='clientSide bg-white p-16 box-border text-center'>
           <div className='listArea text-start w-[85%] mx-auto my-10'>
