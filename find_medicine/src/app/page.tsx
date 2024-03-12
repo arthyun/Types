@@ -12,7 +12,7 @@ config.autoAddCss = false;
 // Components
 export default async function Home() {
   const sql = 'select * from user_info'; // 쿼리문
-  const dbData = await executePool(sql, '');
+  // const dbData = await executePool(sql, '');
   // console.log(dbData);
 
   return (
