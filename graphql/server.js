@@ -34,7 +34,10 @@ const users = [
 const resolvers = {
   Query: {
     books: () => books,
-    users: (_, { userId }) => users.filter((item) => item.userId === userId)
+    users: (parent, args, contextValue, info) => {
+      return users.filter((item) => item.userId === args.userId);
+    }
+    // users: (_, { userId }) => users.filter((item) => item.userId === userId)
   }
 };
 
