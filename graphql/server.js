@@ -1,4 +1,23 @@
 const { ApolloServer, gql } = require('apollo-server');
+const mariadb = require('mariadb');
+
+// Database
+const pool = mariadb.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '3316',
+  database: 'test',
+  port: 3306,
+  connectionLimit: 5
+});
+
+const executePool = async (sql, value) => {
+  let conn;
+  conn = await pool.getConnection();
+  const result = await conn.query(sql, value);
+  await conn.release();
+  return result;
+};
 
 // Dummy data
 const books = [
@@ -18,6 +37,12 @@ const typeDefs = gql`
     title: String
     author: String
   }
+  type Db {
+    USER_NAME: String
+    USER_DATE: String
+    USER_ID: String
+    SEQ: Int
+  }
   type User {
     userId: Int!
     userName: String
@@ -26,6 +51,7 @@ const typeDefs = gql`
   # Response 타입 지정
   type Query {
     books: [Book]
+    db: [Db]
     users(userId: Int): [User]
   }
 `;
@@ -34,6 +60,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     books: () => books,
+    db: async () => await executePool('select * from user', ''),
     users: (parent, args, contextValue, info) => {
       return users.filter((item) => item.userId === args.userId);
     }

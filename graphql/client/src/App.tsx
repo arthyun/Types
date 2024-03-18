@@ -5,6 +5,16 @@ import { useQuery, gql } from '@apollo/client';
 
 const GET_DATA = gql`
   query Query($userId: Int) {
+    books {
+      title
+      author
+    }
+    db {
+      USER_NAME
+      USER_DATE
+      USER_ID
+      SEQ
+    }
     users(userId: $userId) {
       userId
       userName
