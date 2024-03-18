@@ -1,5 +1,16 @@
 const { ApolloServer, gql } = require('apollo-server');
 
+// Dummy data
+const books = [
+  { title: 'The Awakening', author: 'Kate Chopin' },
+  { title: 'City of Glass', author: 'Paul Auster' },
+  { title: 'Lord of the Rings', author: 'Tolkin' }
+];
+const users = [
+  { userId: 1, userName: 'Hyunho Sohn', userEmail: 'son@k2systems.kr' },
+  { userId: 2, userName: 'Seonwoo Lee', userEmail: 'swlee@k2systems.kr' }
+];
+
 // Schema
 const typeDefs = gql`
   # 타입 지정
@@ -18,17 +29,6 @@ const typeDefs = gql`
     users(userId: Int): [User]
   }
 `;
-
-// Dummy data
-const books = [
-  { title: 'The Awakening', author: 'Kate Chopin' },
-  { title: 'City of Glass', author: 'Paul Auster' },
-  { title: 'Lord of the Rings', author: 'Tolkin' }
-];
-const users = [
-  { userId: 1, userName: 'Hyunho Sohn', userEmail: 'son@k2systems.kr' },
-  { userId: 2, userName: 'Seonwoo Lee', userEmail: 'swlee@k2systems.kr' }
-];
 
 // Resolver
 const resolvers = {
