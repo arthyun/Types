@@ -32,7 +32,7 @@ const deleteArr = (row: number): void => {
     <button type="button" @click="insertFirstArr" v-if="toggle">첫 행 추가</button>
     <button type="button" @click="insertLastArr" v-if="toggle">마지막에 행 추가</button>
     <ul v-show="toggle">
-      <li v-for="(row, index) in dataArr" key="index">{{ row }} <span @click="deleteArr(row)" style="cursor: pointer"> ❌</span></li>
+      <li v-for="(row, index) in dataArr" :key="index">{{ row }} <span @click="deleteArr(row)" style="cursor: pointer"> ❌</span></li>
     </ul>
   </div>
 </template>
