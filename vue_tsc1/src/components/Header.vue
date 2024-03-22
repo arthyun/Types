@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineProps<{ login: () => Promise<any> }>();
+
 const navArr = [
   { path: '/', name: 'Home' },
   { path: '/hello', name: 'HelloWorld' },
@@ -13,6 +15,7 @@ const navArr = [
         <li v-for="item in navArr">
           <router-link :to="item.path"> {{ item.name }}</router-link>
         </li>
+        <button type="button" @click="login">로그인</button>
       </ul>
     </nav>
   </header>
