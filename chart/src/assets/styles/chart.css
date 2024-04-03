@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  /* border: 2px solid red; */
+}
+
+.eachItems {
+  width: calc(100% / 4 - 0.85rem);
+  height: 30vh;
+  border: 1px solid #333;
+}
