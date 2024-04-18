@@ -11,24 +11,37 @@ const io = require('socket.io')(server, {
 
 app.use('/', express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
+// 소켓 전체 내용 확인란
 io.on('connection', (socket) => {
   // console.log(socket.id);
+  // console.log(`User Connected: ${socket.id}}`);
+  // console.log(socket.client.conn.server.clientsCount);
 
+  // 헤더확인
+  // console.log(socket.handshake.headers);
+  console.log(socket.handshake.headers);
+
+  // 연결점
   socket.on('connect', (socket) => {
-    console.log(socket.connected); // true
+    console.log(socket.client.id);
   });
 
+  // 연결끊음
+  socket.on('disconnect', (socket) => {
+    // console.log(socket);
+    console.log('유저가 나갔습니다.');
+  });
+
+  // 응답점
   socket.on('message', ({ name, message }) => {
-    console.log({ name, message });
-    io.emit('message', { name, message });
+    // console.log(socket);
+    io.emit('message', { name, message }); // 클라이언트로 보내줌
   });
 
-  socket.on('close', (socket) => {
-    // ...
+  // 에러
+  socket.on('error', (details) => {
+    // console.log(details);
+    return socket.disconnect();
   });
 });
 
@@ -72,7 +85,11 @@ io.on('connection', (socket) => {
 // });
 
 // START THE SERVER =================================================================
-const port = process.env.PORT || 9999;
-server.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+const PORT = process.env.PORT || 9999;
+server.listen(PORT, () => {
+  console.log(`Server Listening On ${PORT}`);
 });
