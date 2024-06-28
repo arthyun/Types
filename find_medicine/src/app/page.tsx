@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import backGroundImage from '/public/pharmacy.jpg';
 // import IntroSession from './components/IntroSession';
-import { executePool } from './util/database';
+// import { executePool } from './util/database';
 
 // font-awesome
 import { config } from '@fortawesome/fontawesome-svg-core';
