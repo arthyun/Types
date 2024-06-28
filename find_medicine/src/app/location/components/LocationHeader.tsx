@@ -59,11 +59,11 @@ const LocationHeader = () => {
     // onSubmit?.();
   };
 
-  // 국토명 API 호출
+  // 국토명 API 호출 (배포시 주소 변경?)
   const getSido = async () => {
     try {
       const response = await axios.get(
-        `/req/data?key=${process.env.NEXT_PUBLIC_SIDO_KEY}&domain=http://localhost:3000&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIDO_INFO`
+        `/req/data?key=${process.env.NEXT_PUBLIC_SIDO_KEY}&domain=https://pharmacy-flax.vercel.app&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIDO_INFO`
       );
       const result = response.data;
       return result;
@@ -74,7 +74,7 @@ const LocationHeader = () => {
   const getSiGunGu = async () => {
     try {
       const response = await axios.get(
-        `/req/data?key=${process.env.NEXT_PUBLIC_SIDO_KEY}&domain=http://localhost:3000&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO`
+        `/req/data?key=${process.env.NEXT_PUBLIC_SIDO_KEY}&domain=https://pharmacy-flax.vercel.app&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO`
       );
       const result = response.data;
       return result;
