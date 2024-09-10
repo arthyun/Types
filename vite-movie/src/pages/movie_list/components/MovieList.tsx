@@ -111,7 +111,7 @@ export default MovieList;
 const ModalTestComponent = () => {
   return (
     <>
-      <h1>죽고잡나?</h1>
+      <h1>모달 작업중...~</h1>
     </>
   );
 };
