@@ -1,0 +1,26 @@
+.modal_section {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.35);
+
+  .modal_article {
+    width: calc(100% - 300px);
+    min-height: 500px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 15px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// .modal_section_off {
+//   display: none;
+// }
