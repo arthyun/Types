@@ -2,9 +2,7 @@ import { ReactNode } from 'react';
 import { modalStore } from '@/contexts/modalStore';
 
 const useModal = () => {
-  const setIsModal = modalStore(
-    (state: { setIsModal: boolean }) => state.setIsModal
-  );
+  const setIsModal = modalStore((state) => state.setIsModal);
   const setComponent = modalStore(
     (state: { setComponent: (by: ReactNode) => void }) => state.setComponent
   );

@@ -33,7 +33,9 @@ const MovieListWrap = () => {
     };
 
     try {
-      const res = await axiosHttpClient.get(`/3/search/movie`, { params });
+      const res = (await axiosHttpClient.get(`/3/search/movie`, {
+        params,
+      })) as any;
       if (res.results.length !== 0) {
         setPaginationData({
           page: res.page,
