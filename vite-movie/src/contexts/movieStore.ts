@@ -7,9 +7,12 @@ interface MovieStore {
   setQuery: (by: string) => void;
 }
 
-const store = (set, get) => ({
+const store = (
+  set: (arg0: (state: any) => { query: string }) => any,
+  _get: any
+) => ({
   query: '',
-  setQuery: (by: string) => set((state) => ({ query: by })),
+  setQuery: (by: string) => set((_state) => ({ query: by })),
 });
 
 export const movieStore = create<MovieStore>()(

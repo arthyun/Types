@@ -43,6 +43,7 @@ const MovieListWrap = () => {
         setMovieList(res.results);
       }
     } catch (error) {
+      // @ts-ignore
       alert('영화 데이터가 없습니다.', 'error'); // 기존 alert와 겹쳐서 오류 띄우는중임 문제는 없음
     }
   };

@@ -5,20 +5,30 @@ import { devtools } from 'zustand/middleware';
 
 interface ModalStore {
   isModal: boolean;
-  component: null;
+  component: any;
   modalData: any;
   setIsModal: (by: boolean) => void;
   setComponent: (by: ReactNode) => void;
   setModalData: (by: any) => void;
 }
 
-const store = (set, get) => ({
+const store = (
+  set: (arg0: {
+    (state: any): { isModal: any };
+    (state: any): { component: any };
+    (state: any): { modalData: any };
+  }) => any,
+  _get: any
+) => ({
   isModal: false,
   component: null,
   modalData: [],
-  setIsModal: (by: boolean) => set((state) => ({ isModal: by })),
-  setComponent: (by: ReactNode) => set((state) => ({ component: by })),
-  setModalData: (by: any) => set((state) => ({ modalData: by })),
+  // @ts-ignore
+  setIsModal: (by: any) => set((_state) => ({ isModal: by })),
+  // @ts-ignore
+  setComponent: (by: any) => set((_state) => ({ component: by })),
+  // @ts-ignore
+  setModalData: (by: any) => set((_state) => ({ modalData: by })),
 });
 
 export const modalStore = create<ModalStore>()(

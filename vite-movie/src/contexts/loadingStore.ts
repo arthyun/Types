@@ -7,9 +7,12 @@ interface LoadingStore {
   setIsLoading: (by: boolean) => void;
 }
 
-const store = (set, get) => ({
+const store = (
+  set: (arg0: (state: any) => { isLoading: boolean }) => any,
+  _get: any
+) => ({
   isLoading: false,
-  setIsLoading: (by: boolean) => set((state) => ({ isLoading: by })),
+  setIsLoading: (by: boolean) => set((_state) => ({ isLoading: by })),
 });
 
 export const loadingStore = create<LoadingStore>()(

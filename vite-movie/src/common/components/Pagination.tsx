@@ -29,7 +29,7 @@ const Pagination: FC<IProps> = ({ totalPages, currentPage, onPageChange }) => {
       // <startpage부터 마지막 페이지까지 남은 갯수>와 <10개> 중 작은 수만큼 길이로 현재 페이지부터 순차 배열 생성
       const result = new Array(Math.min(totalPages - startpage + 1, 10))
         .fill(null)
-        .map((n, i) => i + startpage);
+        .map((_n, i) => i + startpage);
       return setPageNumbers(result);
     }
   }, [totalPages, currentPage]);

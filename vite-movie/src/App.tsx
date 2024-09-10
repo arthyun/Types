@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axiosHttpClient from '@/api/axiosHttpClient.ts';
 import classes from '@/assets/styles/common.module.scss';
-import Router from '@/Router.tsx';
+import Router from './Router.tsx';
 import useAlert from '@/hooks/useAlert';
 import ModalComponent from '@/pages/modals/ModalComponent';
 import LoadingSplash from '@/common/components/Loading/LoadingSplash';

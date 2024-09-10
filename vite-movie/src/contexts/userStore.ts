@@ -7,9 +7,12 @@ interface UserStore {
   setInfo: (by: boolean) => void;
 }
 
-const store = (set, get) => ({
+const store = (
+  set: (arg0: (state: any) => { info: any }) => any,
+  _get: any
+) => ({
   info: false,
-  setInfo: (by: any) => set((state) => ({ info: by })),
+  setInfo: (by: any) => set((_state) => ({ info: by })),
 });
 
 export const userStore = create<UserStore>()(
