@@ -1,7 +1,9 @@
+import classes from './styles/modal.module.scss';
+import { ReactNode } from 'react';
 import { modalStore } from '@/contexts/modalStore';
 import { createPortal } from 'react-dom';
-import { ReactNode } from 'react';
-import classes from './styles/modal.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const modalElement = document.getElementById('modal-root') as HTMLElement;
 
@@ -14,10 +16,14 @@ const ModalComponent = () => {
     (state: { component: ReactNode }) => state.component
   );
   // const modalData = modalStore((state) => state.modalData);
+  const setModalData = modalStore((state) => state.setModalData);
   // console.log('전달 받은 모달 데이터', modalData);
 
   // 모달 닫기
-  const closeModal = () => setIsModal(false);
+  const closeModal = () => {
+    setIsModal(false);
+    setModalData(null);
+  };
 
   if (isModal) {
     return createPortal(
@@ -27,6 +33,9 @@ const ModalComponent = () => {
           onClick={(e) => e.stopPropagation()}
         >
           {component}
+          <span className={classes.modal_close} onClick={closeModal}>
+            <FontAwesomeIcon icon={faXmark} />
+          </span>
         </article>
       </section>,
       modalElement

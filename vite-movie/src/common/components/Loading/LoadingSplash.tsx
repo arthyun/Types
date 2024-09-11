@@ -33,7 +33,7 @@ import loadingLottie from './netflix_animation.json';
 // 변경
 const containerStyle: React.CSSProperties = {
   position: 'absolute',
-  width: window.innerWidth,
+  width: '100%',
   height: '100vh',
   left: 0,
   top: 0,

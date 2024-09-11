@@ -10,7 +10,7 @@ const NoMovieView = () => {
 
   return (
     <div className={classes.no_movie_view}>
-      <h3>검색 결과가 없습니다.</h3>
+      <h3>검색 결과가 없습니다</h3>
       <p>다시 검색을 위하여 아래 돌아가기 버튼을 눌러주세요.</p>
       <button type='button' onClick={handleReturn}>
         돌아가기
