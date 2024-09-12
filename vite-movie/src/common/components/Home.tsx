@@ -44,9 +44,8 @@ const Home = () => {
         {/* <h1>NETFLIX</h1> */}
         <div className={classes.title}>
           <h1>영화, 시리즈 등을 찾아보세요</h1>
-          {/* <p>떠오르는 영화나 시리즈가 없으신가요?</p> */}
-          <p>넷플릭스에 등록된 데이터를 기준으로</p>
           <p>영어, 한국어 등 원하는대로 입력하면 결과를 확인할 수 있어요</p>
+          <p>현재 페이지는 상업용이 아닌 포트폴리오입니다</p>
         </div>
         <form onSubmit={handleSubmit}>
           <button type='submit'>
